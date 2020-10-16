@@ -1,0 +1,5 @@
+key, name, defenseModifier, purchaseCost, description
+Rusty Shield, Rusty Shield, 0, 1, A shield that's falling apart - it offers no defensive value.
+Bronze Shield, Bronze Shield, 0.1, 2, A somewhat effective shield - it mitigates 10% of damage.
+Silver Shield, Silver Shield, 0.2, 5, An effective shield - it mitigates 20% of damage.
+Titanium Shield, Titanium Shield, 0.3, 7, A super effective shield - it mitigates 30% of damage.

@@ -1,0 +1,4 @@
+key, enemyName, attackValue, healthValue, rewardValue, attackName
+0, Lich, 2, 5, 3, Soul Drain
+1, Necromancer, 3, 4, 3, Curse
+2, Witch, 2, 4, 3, Hex

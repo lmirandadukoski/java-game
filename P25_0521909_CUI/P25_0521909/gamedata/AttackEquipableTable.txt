@@ -1,0 +1,5 @@
+key, name, attackModifier, attackName, purchaseCost, description
+Rusty Sword, Rusty Sword, 0, Blunt Strike, 1, An old sword that's no longer sharp.
+Bronze Sword, Bronze Sword, 1, Sword Slash, 2, A sharp sword capable of slashing enemies.
+Silver Sword, Silver Sword, 3, Piercing Slash, 5, An effective and sharp sword that's capable of piercing enemies.
+Titanium Sword, Titanium Sword, 5, Ultimate Slash, 7, The best weapon in the market - it deals the most effective damage.

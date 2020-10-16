@@ -1,0 +1,4 @@
+key, attackValue, healthValue, goldStash
+Easy, 2, 5, 3
+Normal, 2, 4, 3
+Hard, 1, 4, 2

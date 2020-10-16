@@ -1,0 +1,4 @@
+key, name, healthRegen, purchaseCost, description
+Potion, Potion, 3, 1, A concoction that restores 3 health.
+Super Potion, Super Potion, 5, 2, A potent concoction that restores 5 health.
+Elixir, Elixir, 10, 5, A super potent concoction that restores 10 health.
