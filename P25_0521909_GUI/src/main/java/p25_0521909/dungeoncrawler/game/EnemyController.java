@@ -1,57 +1,73 @@
 package p25_0521909.dungeoncrawler.game;
 
-import java.time.Duration;
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
+import java.awt.*;
+import java.time.*;
+import java.util.*;
 import javax.swing.Timer;
+import p25_0521909.dungeoncrawler.constants.Constants;
 import p25_0521909.dungeoncrawler.enemy.Enemy;
+import p25_0521909.dungeoncrawler.enemy.EnemyStats;
 import p25_0521909.dungeoncrawler.events.GameEvent;
-import p25_0521909.dungeoncrawler.interfaces.Updatable;
+import p25_0521909.dungeoncrawler.graphics.EnemySprite;
+import p25_0521909.dungeoncrawler.interfaces.Initialisable;
+import p25_0521909.dungeoncrawler.interfaces.Loopable;
 
 /**
  *
  * @author ludmi
  */
-public class EnemyController implements Updatable, Observer{
+public class EnemyController implements Initialisable, Loopable, Observer{
     public ArrayList<Enemy> enemies;
-    
+
     private SpawnPoint[] spawnPoints;
+    private Point[] targetPoints;
     private Timer timer;
     
     private Instant lastSpawnTime;
-    private long spawnRate = 3;
 
     public EnemyController(){
-        spawnPoints = new SpawnPoint[]{new SpawnPoint(270, 320), new SpawnPoint(470, 330), new SpawnPoint(670, 320)}; 
+        spawnPoints = new SpawnPoint[]{Constants.SPAWN_POINT_1, Constants.SPAWN_POINT_2, Constants.SPAWN_POINT_3}; 
+        targetPoints = new Point[]{Constants.TARGET_POINT_1, Constants.TARGET_POINT_2, Constants.TARGET_POINT_3};
         
-        initialiseValues();
+        initialise();
     }
     
-    public void initialiseValues(){
-        timer = new Timer(10, new GameLoop(this));
+    @Override
+    public void initialise(){
+        timer = new Timer(Constants.FRAME_UPDATE_RATE, new GameLoop(this));        
+        enemies = new ArrayList<Enemy>(); 
         
-        Enemy enemy = new Enemy("Enemy 1");        
-        enemies = new ArrayList<Enemy>();
-        enemies.add(enemy);             
-        enemies.get(0).getEnemySprite().setSpawnPoint(spawnPoints[0]);    
+        GameManager.getInstance().addEventListener("Start Game", this);
+        GameManager.getInstance().addEventListener("Stop Game", this);
     }    
 
     @Override
-    public void update() {
+    public void loop() {
         Duration timeSinceSpawn = Duration.between(lastSpawnTime, Instant.now());
         
-        if(timeSinceSpawn.getSeconds() >= spawnRate){
-            int spawnPointIndex = (int) (Math.random() * spawnPoints.length);
-            System.out.println("Spawn enemy at point " + spawnPointIndex);
-            lastSpawnTime = Instant.now();
+        if(timeSinceSpawn.getSeconds() >= Constants.ENEMY_SPAWN_RATE){
+            int spawnAttempts = 0;
+            while(spawnAttempts < Constants.SPAWN_ATTEMPTS){
+                int index = (int) (Math.random() * spawnPoints.length);
+                
+                if(spawnPoints[index].isAvailable()){
+                    Enemy enemy = spawnEnemy(spawnPoints[index].getLocation(), targetPoints[index]);
+                    enemies.add(enemy);
+                    spawnPoints[index].onCooldown();
+                    lastSpawnTime = Instant.now();
+                    
+                    System.out.println("Spawn enemy, " + enemy.hashCode() + ", at point " + index);
+                    
+                    break;
+                }
+                
+                else{
+                    spawnAttempts++;
+                }
+            }
         }
-    }
-
-    @Override
-    public void executeGameLoop() {
-        update();
+        
+        //iterate through enemies and delete dead ones, set their spawn point as available
     }
 
     @Override
@@ -66,5 +82,13 @@ public class EnemyController implements Updatable, Observer{
         if(event.getEventName().equals("Stop Game")){
             timer.stop();
         } 
+    }
+
+    private Enemy spawnEnemy(Point spawnPoint, Point targetPoint) {
+        String name = "Enemy 1";
+        EnemyStats stats = new EnemyStats(1, 3);
+        EnemySprite sprite = new EnemySprite("sprites/enemy2.png", spawnPoint, targetPoint);
+        
+        return new Enemy(name, stats, sprite);
     }
 }

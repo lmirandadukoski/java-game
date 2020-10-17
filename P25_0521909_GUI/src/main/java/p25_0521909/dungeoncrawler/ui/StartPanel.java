@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import p25_0521909.dungeoncrawler.events.GameEvent;
+import p25_0521909.dungeoncrawler.constants.PanelName;
 import p25_0521909.dungeoncrawler.game.GameManager;
 
 /**
@@ -17,20 +17,13 @@ public class StartPanel extends GamePanel implements ActionListener{
     private JButton startButton;
     private ButtonGroup difficultyOptions;
     
-    private GameEvent startButtonPressed;
-    
     public StartPanel(){
-        super("Start");
+        super(PanelName.START);
     }
 
     @Override
-    void initialiseValues() {
-        frameSize = GameFrame.getInstance().getSize();
-        
-        startButtonPressed = new GameEvent("Start Button Pressed");
-        startButtonPressed.addObserver(GameFrame.getInstance());
-        startButtonPressed.addObserver(GameManager.getInstance());
-        
+    public void initialise() {
+        frameSize = GameFrame.getInstance().getSize();        
         createLayout();
     }
      
@@ -121,7 +114,7 @@ public class StartPanel extends GamePanel implements ActionListener{
         int height = GameFrame.getInstance().getSize().height;
         
         Rectangle presetsBackground = new Rectangle(width / 4, height / 5, width / 2, height / 2);
-        Color color = new Color(0, 0, 0, 0.7F); //Red 
+        Color color = new Color(0, 0, 0, 0.7F);
         g2D.setPaint(color);
         g2D.fill(presetsBackground);     
     }
@@ -132,7 +125,8 @@ public class StartPanel extends GamePanel implements ActionListener{
         
         if(actionCommand.equals("Start")){
             String difficultySelection = difficultyOptions.getSelection().getActionCommand();
-            startButtonPressed.invokeEvent();
+            GameFrame.getInstance().switchGamePanels(PanelName.BATTLE);
+            GameManager.getInstance().startGame();
         }
     }
 }

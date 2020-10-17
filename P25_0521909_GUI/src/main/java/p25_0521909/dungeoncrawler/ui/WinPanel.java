@@ -3,6 +3,7 @@ package p25_0521909.dungeoncrawler.ui;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import p25_0521909.dungeoncrawler.constants.PanelName;
 
 /**
  *
@@ -13,11 +14,11 @@ public class WinPanel extends GamePanel{
 
     
     public WinPanel(){
-        super("Win");
+        super(PanelName.WIN);
     }
 
     @Override
-    void initialiseValues() {
+    public void initialise() {
         frameSize = GameFrame.getInstance().getSize();
         
         createLayout();

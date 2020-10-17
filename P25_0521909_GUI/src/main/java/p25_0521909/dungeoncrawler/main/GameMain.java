@@ -14,12 +14,12 @@ public class GameMain {
     
     public static void main(String[] args) {
         EventQueue.invokeLater( ()-> {
-            gf = GameFrame.getInstance();
             gm = GameManager.getInstance();
+            gm.initialise();
             
+            gf = GameFrame.getInstance();
+            gf.initialise();
             
-            gf.initialiseValues();
-            gm.initialiseValues();
         });   
     }
     

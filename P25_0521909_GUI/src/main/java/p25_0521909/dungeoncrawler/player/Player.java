@@ -1,12 +1,13 @@
 package p25_0521909.dungeoncrawler.player;
 
+import p25_0521909.dungeoncrawler.interfaces.Initialisable;
 import p25_0521909.dungeoncrawler.item.Inventory;
 
 /**
  *
  * @author ludmi
  */
-public class Player {
+public class Player implements Initialisable{
     private Inventory inventory;
     private PlayerStats stats;
     
@@ -16,7 +17,8 @@ public class Player {
         stats = new PlayerStats();
     }
     
-    public void initialiseValues(){
+    @Override
+    public void initialise(){
         
     }
     

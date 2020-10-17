@@ -9,9 +9,9 @@ import p25_0521909.dungeoncrawler.interfaces.Combatable;
 public class EnemyStats implements Combatable{
     private int attackDamage, healthValue;
     
-    EnemyStats(){
-        attackDamage = 1;
-        healthValue = 3;
+    public EnemyStats(int attackDamage, int healthValue){
+        this.attackDamage = attackDamage;
+        this.healthValue = healthValue;
     }
     
     @Override

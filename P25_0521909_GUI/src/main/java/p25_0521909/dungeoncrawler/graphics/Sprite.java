@@ -1,7 +1,6 @@
 package p25_0521909.dungeoncrawler.graphics;
 
 import java.awt.Image;
-import java.awt.Point;
 import javax.swing.ImageIcon;
 
 /**

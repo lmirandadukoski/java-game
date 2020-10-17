@@ -1,23 +1,18 @@
 package p25_0521909.dungeoncrawler.game;
 
-import java.time.Duration;
-import java.time.Instant;
-import java.util.Observable;
-import java.util.Observer;
+import java.time.*;
+import java.util.*;
 import javax.swing.Timer;
-import p25_0521909.dungeoncrawler.events.GameEvent;
-import p25_0521909.dungeoncrawler.interfaces.Updatable;
-import p25_0521909.dungeoncrawler.player.Player;
-import p25_0521909.dungeoncrawler.player.PlayerStats;
-import p25_0521909.dungeoncrawler.ui.BattlePanel;
-import p25_0521909.dungeoncrawler.ui.GameFrame;
+import p25_0521909.dungeoncrawler.constants.Constants;
+import p25_0521909.dungeoncrawler.events.*;
+import p25_0521909.dungeoncrawler.interfaces.*;
+import p25_0521909.dungeoncrawler.player.*;
 
 /**
  *
  * @author ludmi
  */
-public class GameManager implements Updatable, Observer{
-    
+public class GameManager implements Initialisable, Loopable, GameEventListener{
     private static GameManager instance;
     
     private PlayerStats playerStats;
@@ -27,49 +22,31 @@ public class GameManager implements Updatable, Observer{
     private Duration duration;                                
     private Instant startTime, endTime;
     private GameEvent startGame, stopGame;
-    private long maxGameDuration = 60;
+    private ArrayList<GameEvent> gameEvents;
 
     private GameManager(){}
     
-    public void initialiseValues(){
-        timer = new Timer(10, new GameLoop(this));
-        enemyController = new EnemyController();
-        playerStats = Player.getInstance().getStats();
-        
+    @Override
+    public void initialise(){
+        gameEvents = new ArrayList<GameEvent>();
         startGame = new GameEvent("Start Game");
-        startGame.addObserver(enemyController);
-        startGame.addObserver((BattlePanel) GameFrame.getInstance().getGamePanel("Battle"));
-        
         stopGame = new GameEvent("Stop Game");
-        stopGame.addObserver(enemyController);
-        stopGame.addObserver((BattlePanel) GameFrame.getInstance().getGamePanel("Battle"));
-    }
-    
-    @Override
-    public Object clone() throws CloneNotSupportedException{
-        throw new CloneNotSupportedException();
-    }
+        gameEvents.add(startGame);
+        gameEvents.add(stopGame);
         
-    public static synchronized GameManager getInstance(){
-        if(instance == null){
-            instance = new GameManager();
-        }
-        return instance;
+        playerStats = Player.getInstance().getStats();
+        enemyController = new EnemyController();        
+        timer = new Timer(Constants.FRAME_UPDATE_RATE, new GameLoop(this));  
     }
     
-    public EnemyController getEnemyController(){
-        return enemyController;
-    }
-
     @Override
-    public void update() {
+    public void loop() {
         duration = Duration.between(startTime, Instant.now());
 
-        if(duration.getSeconds() >= maxGameDuration){
+        if(duration.getSeconds() >= Constants.GAME_DURATION){
             endTime = Instant.now();
             timer.stop();
-            stopGame.invokeEvent();  
-            
+            stopGame.invokeEvent();   
         }
         
         if(playerStats.isDead()){
@@ -80,20 +57,36 @@ public class GameManager implements Updatable, Observer{
             System.out.println("Player lost the game");
         }
     }
-
+    
     @Override
-    public void executeGameLoop() {
-        update();
+    public void addEventListener(String eventName, Observer observer) {
+        for(int i = 0; i < gameEvents.size(); i++){
+            if(gameEvents.get(i).getEventName().equals(eventName)){
+                gameEvents.get(i).addObserver(observer);
+                break;
+            }
+        }
+    }
+    
+    @Override
+    public Object clone() throws CloneNotSupportedException{
+        throw new CloneNotSupportedException();
     }
 
-    @Override
-    public void update(Observable o, Object arg) {
-        GameEvent event = (GameEvent) o;
-        
-        if(event.getEventName().equals("Start Button Pressed")){
-            startTime = Instant.now();
-            timer.start();
-            startGame.invokeEvent();
-        }          
+    public void startGame(){
+        startTime = Instant.now();
+        timer.start();
+        startGame.invokeEvent();
+    }
+    
+    public EnemyController getEnemyController(){
+        return enemyController;
+    } 
+    
+    public static synchronized GameManager getInstance(){
+        if(instance == null){
+            instance = new GameManager();
+        }
+        return instance;
     }
 }

@@ -1,18 +1,18 @@
 package p25_0521909.dungeoncrawler.ui;
 
 import java.awt.*;
-import java.util.Observable;
-import java.util.Observer;
 import javax.swing.*;
-import p25_0521909.dungeoncrawler.events.GameEvent;
+
+import p25_0521909.dungeoncrawler.constants.PanelName;
 import p25_0521909.dungeoncrawler.graphics.BackgroundSprite;
 import p25_0521909.dungeoncrawler.graphics.Sprite;
+import p25_0521909.dungeoncrawler.interfaces.Initialisable;
 
 /**
  *
  * @author ludmi
  */
-public class GameFrame extends JFrame implements Observer{
+public class GameFrame extends JFrame implements Initialisable{
     private static GameFrame instance;
     
     private Container screenContent;
@@ -22,7 +22,8 @@ public class GameFrame extends JFrame implements Observer{
     
     private GameFrame(){}
     
-    public void initialiseValues(){
+    @Override
+    public void initialise(){
         Toolkit kit = Toolkit.getDefaultToolkit();
         Dimension screenSize = kit.getScreenSize();
         setSize(new Dimension(screenSize.width / 2, screenSize.height / 2));
@@ -50,14 +51,15 @@ public class GameFrame extends JFrame implements Observer{
         
         for(int i = 0; i < gamePanels.length; i++){
             gamePanels[i].setOpaque(false);
-            gamePanels[i].initialiseValues();
-            screenContent.add(gamePanels[i], gamePanels[i].getPanelName());
+            gamePanels[i].initialise();
+            System.out.println(gamePanels[i].getPanelName());
+            screenContent.add(gamePanels[i], gamePanels[i].getPanelName().toString());
         }
     
         getContentPane().add(screenContent); 
         setVisible(true);
     }
-        
+    
     @Override
     public Object clone() throws CloneNotSupportedException{
         throw new CloneNotSupportedException();
@@ -70,32 +72,8 @@ public class GameFrame extends JFrame implements Observer{
         return instance;
     }
     
-    void switchGamePanels(String panelName){
+    void switchGamePanels(PanelName name){
         CardLayout cardLayout = (CardLayout) screenContent.getLayout();        
-        cardLayout.show(screenContent, panelName);        
-    }
-    
-    public GamePanel getGamePanel(String panelName){
-        GamePanel gp = null;
-        
-        for(int i = 0; i < gamePanels.length; i++){
-            
-            if(gamePanels[i].getPanelName().equals(panelName)){
-                gp = gamePanels[i];
-                break;
-            }
-        }
-        
-        return gp;
-    }
-
-    @Override
-    public void update(Observable o, Object arg) {
-        GameEvent event = (GameEvent) o;
-        
-        if(event.getEventName().equals("Start Button Pressed")){
-            switchGamePanels("Battle");
-        }         
-    }
-    
+        cardLayout.show(screenContent, name.toString());        
+    }    
 }

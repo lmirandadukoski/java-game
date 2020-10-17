@@ -8,24 +8,22 @@ import p25_0521909.dungeoncrawler.graphics.EnemySprite;
  * @author ludmi
  */
 public class Enemy {
-    private String enemyName;
+    private String name;
     
     private EnemyStats stats;
-    private EnemySprite enemySprite;
+    private EnemySprite sprite;
     
-    public Enemy(String enemyName) {
-        this.enemyName = enemyName;
-        stats = new EnemyStats();
-        
-        enemySprite = new EnemySprite("sprites/enemy2.png");
-        enemySprite.setTargetPoint(new Point(470, 420));
+    public Enemy(String name, EnemyStats stats, EnemySprite sprite) {
+        this.name = name;
+        this.stats = stats;
+        this.sprite = sprite;
     }
     
-    public EnemySprite getEnemySprite(){
-        return enemySprite;
+    public EnemySprite getSprite(){
+        return sprite;
     }
     
-    public EnemyStats getEnemyStats(){
+    public EnemyStats getStats(){
         return stats;
     }
     

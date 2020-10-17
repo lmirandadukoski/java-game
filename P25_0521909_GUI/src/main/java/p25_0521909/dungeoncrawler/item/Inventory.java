@@ -1,6 +1,5 @@
 package p25_0521909.dungeoncrawler.item;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
