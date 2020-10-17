@@ -1,6 +1,7 @@
 package p25_0521909.dungeoncrawler.events;
 
 import java.util.Observer;
+import p25_0521909.dungeoncrawler.constants.EventName;
 
 /**
  *
@@ -8,6 +9,6 @@ import java.util.Observer;
  */
 public interface GameEventListener{
     
-    public void addEventListener(String eventName, Observer observer);
+    public void addEventListener(EventName eventName, Observer observer);
     
 }

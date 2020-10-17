@@ -4,9 +4,12 @@ import java.time.*;
 import java.util.*;
 import javax.swing.Timer;
 import p25_0521909.dungeoncrawler.constants.Constants;
+import p25_0521909.dungeoncrawler.constants.EventName;
+import p25_0521909.dungeoncrawler.constants.PanelName;
 import p25_0521909.dungeoncrawler.events.*;
 import p25_0521909.dungeoncrawler.interfaces.*;
 import p25_0521909.dungeoncrawler.player.*;
+import p25_0521909.dungeoncrawler.ui.GameFrame;
 
 /**
  *
@@ -29,8 +32,8 @@ public class GameManager implements Initialisable, Loopable, GameEventListener{
     @Override
     public void initialise(){
         gameEvents = new ArrayList<GameEvent>();
-        startGame = new GameEvent("Start Game");
-        stopGame = new GameEvent("Stop Game");
+        startGame = new GameEvent(EventName.START_GAME);
+        stopGame = new GameEvent(EventName.STOP_GAME);
         gameEvents.add(startGame);
         gameEvents.add(stopGame);
         
@@ -46,7 +49,9 @@ public class GameManager implements Initialisable, Loopable, GameEventListener{
         if(duration.getSeconds() >= Constants.GAME_DURATION){
             endTime = Instant.now();
             timer.stop();
-            stopGame.invokeEvent();   
+            stopGame.invokeEvent();
+            
+            GameFrame.getInstance().switchGamePanels(PanelName.WIN);
         }
         
         if(playerStats.isDead()){
@@ -59,10 +64,10 @@ public class GameManager implements Initialisable, Loopable, GameEventListener{
     }
     
     @Override
-    public void addEventListener(String eventName, Observer observer) {
-        for(int i = 0; i < gameEvents.size(); i++){
-            if(gameEvents.get(i).getEventName().equals(eventName)){
-                gameEvents.get(i).addObserver(observer);
+    public void addEventListener(EventName eventName, Observer observer) {
+        for(GameEvent gameEvent : gameEvents){
+            if(gameEvent.getEventName().toString().equals(eventName.toString())){
+                gameEvent.addObserver(observer);
                 break;
             }
         }

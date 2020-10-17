@@ -29,8 +29,8 @@ public class BattlePanel extends GamePanel implements MouseListener, Loopable, O
     @Override
     public void initialise() {
         addMouseListener(this);
-        GameManager.getInstance().addEventListener("Start Game", this);
-        GameManager.getInstance().addEventListener("Stop Game", this);
+        GameManager.getInstance().addEventListener(EventName.START_GAME, this);
+        GameManager.getInstance().addEventListener(EventName.STOP_GAME, this);
         
         enemyController = GameManager.getInstance().getEnemyController();
         timer = new Timer(Constants.FRAME_UPDATE_RATE, new GameLoop(this));
@@ -45,12 +45,15 @@ public class BattlePanel extends GamePanel implements MouseListener, Loopable, O
     public void paintComponent(Graphics g)
     {
         super.paintComponent(g);
+        g.drawRect(Constants.TARGET_POINT_1.x - (148 / 2), Constants.TARGET_POINT_1.y - 130, 148, 130);
+        g.drawRect(Constants.TARGET_POINT_2.x - (148 / 2), Constants.TARGET_POINT_2.y - 130, 148, 130);
+        g.drawRect(Constants.TARGET_POINT_3.x - (148 / 2), Constants.TARGET_POINT_3.y - 130, 148, 130);
 
-        for(int i = 0; i < enemyController.enemies.size(); i++){
-            Enemy enemy = enemyController.enemies.get(i);
+        for(Enemy enemy : enemyController.enemies){
             Image enemyImage = enemy.getSprite().getSpriteImage();
+            Dimension spriteDimension = enemy.getSprite().getSpriteDimension();
             Point currentLocation = enemy.getSprite().getCurrentLocation();  
-            g.drawImage(enemyImage, currentLocation.x, currentLocation.y, this);
+            g.drawImage(enemyImage, currentLocation.x - (spriteDimension.width / 2), currentLocation.y - spriteDimension.height, this);
         } 
     }
 
@@ -63,17 +66,17 @@ public class BattlePanel extends GamePanel implements MouseListener, Loopable, O
     @Override
     public void mouseReleased(MouseEvent e) {
         Point point = e.getPoint();
-
-        for(int i = 0; i < enemyController.enemies.size(); i++){
-            Enemy enemy = enemyController.enemies.get(i);
+        System.out.println(point);
+        
+        for(Enemy enemy : enemyController.enemies){
             Point currentLocation = enemy.getSprite().getCurrentLocation();
-            Rectangle imageBounds = new Rectangle(currentLocation.x, currentLocation.y, enemy.getSprite().getSpriteImage().getWidth(this), enemy.getSprite().getSpriteImage().getHeight(this));
+            Dimension spriteDimension = enemy.getSprite().getSpriteDimension();
+            Rectangle imageBounds = new Rectangle(currentLocation.x - (spriteDimension.width / 2), currentLocation.y - spriteDimension.height, spriteDimension.width, spriteDimension.height);
             
             if (imageBounds.contains(point)){
                 Player.getInstance().getStats().attack(enemy.getStats());
-                //System.out.println(enemy.getStats().isDead());
-            }
-        }      
+            }            
+        }   
     }
 
     @Override
@@ -91,11 +94,11 @@ public class BattlePanel extends GamePanel implements MouseListener, Loopable, O
     public void update(Observable o, Object arg) {
         GameEvent event = (GameEvent) o;
         
-        if(event.getEventName().equals("Start Game")){
+        if(event.equals(EventName.START_GAME)){
             timer.start();
         } 
         
-        if(event.getEventName().equals("Stop Game")){
+        if(event.equals(EventName.STOP_GAME)){
             timer.stop();
         } 
     }  

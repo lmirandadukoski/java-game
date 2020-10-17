@@ -4,7 +4,8 @@ import java.awt.*;
 import java.time.*;
 import java.util.*;
 import javax.swing.Timer;
-import p25_0521909.dungeoncrawler.constants.Constants;
+
+import p25_0521909.dungeoncrawler.constants.*;
 import p25_0521909.dungeoncrawler.enemy.Enemy;
 import p25_0521909.dungeoncrawler.enemy.EnemyStats;
 import p25_0521909.dungeoncrawler.events.GameEvent;
@@ -37,8 +38,8 @@ public class EnemyController implements Initialisable, Loopable, Observer{
         timer = new Timer(Constants.FRAME_UPDATE_RATE, new GameLoop(this));        
         enemies = new ArrayList<Enemy>(); 
         
-        GameManager.getInstance().addEventListener("Start Game", this);
-        GameManager.getInstance().addEventListener("Stop Game", this);
+        GameManager.getInstance().addEventListener(EventName.START_GAME, this);
+        GameManager.getInstance().addEventListener(EventName.STOP_GAME, this);
     }    
 
     @Override
@@ -54,10 +55,7 @@ public class EnemyController implements Initialisable, Loopable, Observer{
                     Enemy enemy = spawnEnemy(spawnPoints[index].getLocation(), targetPoints[index]);
                     enemies.add(enemy);
                     spawnPoints[index].onCooldown();
-                    lastSpawnTime = Instant.now();
-                    
-                    System.out.println("Spawn enemy, " + enemy.hashCode() + ", at point " + index);
-                    
+                    lastSpawnTime = Instant.now();                    
                     break;
                 }
                 
@@ -67,19 +65,28 @@ public class EnemyController implements Initialisable, Loopable, Observer{
             }
         }
         
-        //iterate through enemies and delete dead ones, set their spawn point as available
+        if(enemies.size() > 0){
+            Iterator<Enemy> iterator = enemies.iterator();
+            
+            while(iterator.hasNext()){
+                Enemy enemy = iterator.next();
+                if(enemy.getStats().isDead()){
+                    iterator.remove();
+                }
+            }
+        }
     }
 
     @Override
     public void update(Observable o, Object arg) {
         GameEvent event = (GameEvent) o;
         
-        if(event.getEventName().equals("Start Game")){
+        if(event.equals(EventName.START_GAME)){
             timer.start();
             lastSpawnTime = Instant.now();
         } 
         
-        if(event.getEventName().equals("Stop Game")){
+        if(event.equals(EventName.STOP_GAME)){
             timer.stop();
         } 
     }
@@ -87,7 +94,7 @@ public class EnemyController implements Initialisable, Loopable, Observer{
     private Enemy spawnEnemy(Point spawnPoint, Point targetPoint) {
         String name = "Enemy 1";
         EnemyStats stats = new EnemyStats(1, 3);
-        EnemySprite sprite = new EnemySprite("sprites/enemy2.png", spawnPoint, targetPoint);
+        EnemySprite sprite = new EnemySprite("sprites/enemy1.png", spawnPoint, targetPoint);
         
         return new Enemy(name, stats, sprite);
     }

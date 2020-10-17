@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import p25_0521909.dungeoncrawler.constants.Constants;
 import p25_0521909.dungeoncrawler.constants.PanelName;
 import p25_0521909.dungeoncrawler.game.GameManager;
 
@@ -13,7 +14,6 @@ import p25_0521909.dungeoncrawler.game.GameManager;
  * @author ludmi
  */
 public class StartPanel extends GamePanel implements ActionListener{
-    private Dimension frameSize;
     private JButton startButton;
     private ButtonGroup difficultyOptions;
     
@@ -22,8 +22,7 @@ public class StartPanel extends GamePanel implements ActionListener{
     }
 
     @Override
-    public void initialise() {
-        frameSize = GameFrame.getInstance().getSize();        
+    public void initialise() {       
         createLayout();
     }
      
@@ -33,8 +32,8 @@ public class StartPanel extends GamePanel implements ActionListener{
         JPanel presetsPanel = new JPanel();
         presetsPanel.setLayout(new BoxLayout(presetsPanel, BoxLayout.Y_AXIS));
         presetsPanel.setBorder(new EmptyBorder(16, 16, 16, 16));  
-        presetsPanel.setSize(new Dimension(frameSize.width / 2, frameSize.height / 2));
-        presetsPanel.setBounds(frameSize.width / 4, frameSize.height / 5, frameSize.width / 2, frameSize.height / 2);
+        presetsPanel.setSize(new Dimension(Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT / 2));
+        presetsPanel.setBounds(Constants.SCREEN_WIDTH / 4, Constants.SCREEN_HEIGHT / 5, Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT / 2);
         presetsPanel.setOpaque(false);
         
         JLabel title = new JLabel("Dungeon Crawler");
@@ -59,7 +58,7 @@ public class StartPanel extends GamePanel implements ActionListener{
         presetsPanel.add(Box.createVerticalStrut(8));  
         
         JPanel difficultySelectionPanel = new JPanel();
-        difficultySelectionPanel.setSize(new Dimension(frameSize.width / 2, 10));
+        difficultySelectionPanel.setSize(new Dimension(Constants.SCREEN_WIDTH / 2, 10));
         difficultySelectionPanel.setOpaque(false);
         
         JRadioButton easyButton = new JRadioButton("Easy");
@@ -110,8 +109,8 @@ public class StartPanel extends GamePanel implements ActionListener{
         super.paintComponent(g);
         Graphics2D g2D = (Graphics2D)g;
         
-        int width = GameFrame.getInstance().getSize().width;
-        int height = GameFrame.getInstance().getSize().height;
+        int width = Constants.SCREEN_WIDTH;
+        int height = Constants.SCREEN_HEIGHT;
         
         Rectangle presetsBackground = new Rectangle(width / 4, height / 5, width / 2, height / 2);
         Color color = new Color(0, 0, 0, 0.7F);

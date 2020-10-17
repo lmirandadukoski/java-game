@@ -3,6 +3,7 @@ package p25_0521909.dungeoncrawler.ui;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import p25_0521909.dungeoncrawler.constants.Constants;
 import p25_0521909.dungeoncrawler.constants.PanelName;
 
 /**
@@ -10,17 +11,13 @@ import p25_0521909.dungeoncrawler.constants.PanelName;
  * @author ludmi
  */
 public class WinPanel extends GamePanel{
-    private Dimension frameSize;
-
     
     public WinPanel(){
         super(PanelName.WIN);
     }
 
     @Override
-    public void initialise() {
-        frameSize = GameFrame.getInstance().getSize();
-        
+    public void initialise() {        
         createLayout();
     }
      
@@ -30,8 +27,8 @@ public class WinPanel extends GamePanel{
         JPanel contentPanel = new JPanel();
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
         contentPanel.setBorder(new EmptyBorder(16, 16, 16, 16));  
-        contentPanel.setSize(new Dimension(frameSize.width / 2, frameSize.height / 2));
-        contentPanel.setBounds(frameSize.width / 4, frameSize.height / 5, frameSize.width / 2, frameSize.height / 2);
+        contentPanel.setSize(new Dimension(Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT / 2));
+        contentPanel.setBounds(Constants.SCREEN_WIDTH / 4, Constants.SCREEN_HEIGHT / 5, Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT / 2);
         contentPanel.setOpaque(false);
         
         JLabel title = new JLabel("You won!");
@@ -48,8 +45,6 @@ public class WinPanel extends GamePanel{
         contentPanel.add(subtitle);
         contentPanel.add(Box.createVerticalStrut(32));  
         
-
-
         this.add(contentPanel); 
     }
      

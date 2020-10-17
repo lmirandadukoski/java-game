@@ -2,6 +2,7 @@ package p25_0521909.dungeoncrawler.ui;
 
 import java.awt.*;
 import javax.swing.*;
+import p25_0521909.dungeoncrawler.constants.Constants;
 
 import p25_0521909.dungeoncrawler.constants.PanelName;
 import p25_0521909.dungeoncrawler.graphics.BackgroundSprite;
@@ -24,21 +25,19 @@ public class GameFrame extends JFrame implements Initialisable{
     
     @Override
     public void initialise(){
-        Toolkit kit = Toolkit.getDefaultToolkit();
-        Dimension screenSize = kit.getScreenSize();
-        setSize(new Dimension(screenSize.width / 2, screenSize.height / 2));
+        setSize(new Dimension(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT));
         setResizable(false);
-        setTitle("Dungeon Crawler");
+        setTitle(Constants.FRAME_TITLE);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(GameFrame.EXIT_ON_CLOSE);
         
-        background = new BackgroundSprite("sprites/background.jpg");
+        background = new BackgroundSprite();
         
         createLayout();        
     }
     
     void createLayout(){
-        gamePanels = new GamePanel[]{new StartPanel(), new BattlePanel()};
+        gamePanels = new GamePanel[]{new StartPanel(), new BattlePanel(), new WinPanel()};
         
         screenContent = new JPanel(new CardLayout()){
             @Override
@@ -49,11 +48,10 @@ public class GameFrame extends JFrame implements Initialisable{
             }
         };
         
-        for(int i = 0; i < gamePanels.length; i++){
-            gamePanels[i].setOpaque(false);
-            gamePanels[i].initialise();
-            System.out.println(gamePanels[i].getPanelName());
-            screenContent.add(gamePanels[i], gamePanels[i].getPanelName().toString());
+        for(GamePanel panel : gamePanels){
+            panel.setOpaque(false);
+            panel.initialise();
+            screenContent.add(panel, panel.getPanelName().toString());
         }
     
         getContentPane().add(screenContent); 
@@ -72,7 +70,7 @@ public class GameFrame extends JFrame implements Initialisable{
         return instance;
     }
     
-    void switchGamePanels(PanelName name){
+    public void switchGamePanels(PanelName name){
         CardLayout cardLayout = (CardLayout) screenContent.getLayout();        
         cardLayout.show(screenContent, name.toString());        
     }    
