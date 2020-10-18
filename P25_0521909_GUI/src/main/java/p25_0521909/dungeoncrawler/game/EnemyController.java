@@ -6,10 +6,9 @@ import java.util.*;
 import javax.swing.Timer;
 
 import p25_0521909.dungeoncrawler.constants.*;
-import p25_0521909.dungeoncrawler.enemy.Enemy;
-import p25_0521909.dungeoncrawler.enemy.EnemyStats;
+import p25_0521909.dungeoncrawler.enemy.*;
 import p25_0521909.dungeoncrawler.events.GameEvent;
-import p25_0521909.dungeoncrawler.graphics.EnemySprite;
+import p25_0521909.dungeoncrawler.graphics.Sprite;
 import p25_0521909.dungeoncrawler.interfaces.Initialisable;
 import p25_0521909.dungeoncrawler.interfaces.Loopable;
 
@@ -93,9 +92,10 @@ public class EnemyController implements Initialisable, Loopable, Observer{
 
     private Enemy spawnEnemy(Point spawnPoint, Point targetPoint) {
         String name = "Enemy 1";
+        Sprite sprite = new Sprite("sprites/enemy1.png");
         EnemyStats stats = new EnemyStats(1, 3);
-        EnemySprite sprite = new EnemySprite("sprites/enemy1.png", spawnPoint, targetPoint);
+        EnemyGraphics graphics = new EnemyGraphics(sprite, spawnPoint, targetPoint);
         
-        return new Enemy(name, stats, sprite);
+        return new Enemy(name, stats, graphics);
     }
 }

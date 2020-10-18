@@ -45,14 +45,18 @@ public class BattlePanel extends GamePanel implements MouseListener, Loopable, O
     public void paintComponent(Graphics g)
     {
         super.paintComponent(g);
+        g.drawRect(Constants.SPAWN_POINT_1.x - (148 / 2), Constants.SPAWN_POINT_1.y - 130, 148, 130);
+        g.drawRect(Constants.SPAWN_POINT_2.x - (148 / 2), Constants.SPAWN_POINT_2.y - 130, 148, 130);
+        g.drawRect(Constants.SPAWN_POINT_3.x - (148 / 2), Constants.SPAWN_POINT_3.y - 130, 148, 130);
+        
         g.drawRect(Constants.TARGET_POINT_1.x - (148 / 2), Constants.TARGET_POINT_1.y - 130, 148, 130);
         g.drawRect(Constants.TARGET_POINT_2.x - (148 / 2), Constants.TARGET_POINT_2.y - 130, 148, 130);
         g.drawRect(Constants.TARGET_POINT_3.x - (148 / 2), Constants.TARGET_POINT_3.y - 130, 148, 130);
 
         for(Enemy enemy : enemyController.enemies){
-            Image enemyImage = enemy.getSprite().getSpriteImage();
-            Dimension spriteDimension = enemy.getSprite().getSpriteDimension();
-            Point currentLocation = enemy.getSprite().getCurrentLocation();  
+            Image enemyImage = enemy.getGraphics().getSprite().getSpriteImage();
+            Dimension spriteDimension = enemy.getGraphics().getSprite().getSpriteDimension();
+            Point currentLocation = enemy.getGraphics().getCurrentLocation();  
             g.drawImage(enemyImage, currentLocation.x - (spriteDimension.width / 2), currentLocation.y - spriteDimension.height, this);
         } 
     }
@@ -66,11 +70,10 @@ public class BattlePanel extends GamePanel implements MouseListener, Loopable, O
     @Override
     public void mouseReleased(MouseEvent e) {
         Point point = e.getPoint();
-        System.out.println(point);
         
         for(Enemy enemy : enemyController.enemies){
-            Point currentLocation = enemy.getSprite().getCurrentLocation();
-            Dimension spriteDimension = enemy.getSprite().getSpriteDimension();
+            Point currentLocation = enemy.getGraphics().getCurrentLocation();
+            Dimension spriteDimension = enemy.getGraphics().getSprite().getSpriteDimension();
             Rectangle imageBounds = new Rectangle(currentLocation.x - (spriteDimension.width / 2), currentLocation.y - spriteDimension.height, spriteDimension.width, spriteDimension.height);
             
             if (imageBounds.contains(point)){

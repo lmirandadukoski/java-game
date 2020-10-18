@@ -2,14 +2,13 @@ package p25_0521909.dungeoncrawler.graphics;
 
 import java.awt.Dimension;
 import java.awt.Image;
-import java.awt.image.ImageObserver;
 import javax.swing.ImageIcon;
 
 /**
  *
  * @author ludmi
  */
-public abstract class Sprite {
+public class Sprite {
     private ImageIcon sprite;
     private Dimension spriteDimension;
     

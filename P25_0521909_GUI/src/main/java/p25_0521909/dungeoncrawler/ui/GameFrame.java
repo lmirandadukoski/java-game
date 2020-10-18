@@ -2,10 +2,9 @@ package p25_0521909.dungeoncrawler.ui;
 
 import java.awt.*;
 import javax.swing.*;
-import p25_0521909.dungeoncrawler.constants.Constants;
 
+import p25_0521909.dungeoncrawler.constants.Constants;
 import p25_0521909.dungeoncrawler.constants.PanelName;
-import p25_0521909.dungeoncrawler.graphics.BackgroundSprite;
 import p25_0521909.dungeoncrawler.graphics.Sprite;
 import p25_0521909.dungeoncrawler.interfaces.Initialisable;
 
@@ -31,7 +30,7 @@ public class GameFrame extends JFrame implements Initialisable{
         setLocationRelativeTo(null);
         setDefaultCloseOperation(GameFrame.EXIT_ON_CLOSE);
         
-        background = new BackgroundSprite();
+        background = new Sprite(Constants.BACKGROUND_IMAGE_PATH);
         
         createLayout();        
     }

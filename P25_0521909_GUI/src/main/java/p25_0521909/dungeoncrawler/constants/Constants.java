@@ -23,15 +23,15 @@ public class Constants {
     public static final int GAME_DURATION = 60;
     
     public static final long ENEMY_SPAWN_RATE = 3;
-    public static final int ENEMY_MOVE_SPEED = 50;
+    public static final double ENEMY_MOVE_SPEED = 0.1;
     public static int SPAWN_ATTEMPTS = 5;
     public static int SPAWN_POINT_COOLDOWN_DURATION = 3;
     
-    public static final SpawnPoint SPAWN_POINT_1 = new SpawnPoint(204, 348);
-    public static final SpawnPoint SPAWN_POINT_2 = new SpawnPoint(469, 365);
-    public static final SpawnPoint SPAWN_POINT_3 = new SpawnPoint(739, 348);
+    public static final SpawnPoint SPAWN_POINT_1 = new SpawnPoint(160, 340);
+    public static final SpawnPoint SPAWN_POINT_2 = new SpawnPoint(480, 360);
+    public static final SpawnPoint SPAWN_POINT_3 = new SpawnPoint(800, 340);
     
-    public static final Point TARGET_POINT_1 = new Point(124, 410);
-    public static final Point TARGET_POINT_2 = new Point(469, 473);
-    public static final Point TARGET_POINT_3 = new Point(864, 410);   
+    public static final Point TARGET_POINT_1 = new Point(280, 440);
+    public static final Point TARGET_POINT_2 = new Point(480, 470);
+    public static final Point TARGET_POINT_3 = new Point(680, 440);   
 }

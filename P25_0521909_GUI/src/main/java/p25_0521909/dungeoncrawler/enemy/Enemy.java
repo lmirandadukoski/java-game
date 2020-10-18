@@ -1,8 +1,5 @@
 package p25_0521909.dungeoncrawler.enemy;
 
-import java.awt.Point;
-import p25_0521909.dungeoncrawler.graphics.EnemySprite;
-
 /**
  *
  * @author ludmi
@@ -11,16 +8,16 @@ public class Enemy {
     private String name;
     
     private EnemyStats stats;
-    private EnemySprite sprite;
+    private EnemyGraphics graphics;
     
-    public Enemy(String name, EnemyStats stats, EnemySprite sprite) {
+    public Enemy(String name, EnemyStats stats, EnemyGraphics graphics) {
         this.name = name;
         this.stats = stats;
-        this.sprite = sprite;
+        this.graphics = graphics;
     }
     
-    public EnemySprite getSprite(){
-        return sprite;
+    public EnemyGraphics getGraphics(){
+        return graphics;
     }
     
     public EnemyStats getStats(){
