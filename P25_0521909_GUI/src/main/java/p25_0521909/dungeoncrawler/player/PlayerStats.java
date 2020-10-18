@@ -9,7 +9,8 @@ import p25_0521909.dungeoncrawler.interfaces.Combatable;
 public class PlayerStats implements Combatable{
     private int attackDamage;
     private double defenseModifier;
-    private int baseHealthValue, currentHealthValue;
+    private int baseHealthValue;
+    private int currentHealthValue;
 
     public PlayerStats(){
         attackDamage = 1;
