@@ -26,6 +26,7 @@ public class EnemyStats implements Combatable, Loopable, Observer{
         this.healthValue = healthValue;
         
         timer = new Timer(Constants.FRAME_UPDATE_RATE, new GameLoop(this));
+        attackTimes = 0;
     }
     
     @Override
@@ -59,9 +60,10 @@ public class EnemyStats implements Combatable, Loopable, Observer{
     public void loop() {
         Duration timeSinceAttack = Duration.between(lastAttackTime, Instant.now());
         
-        if(attackTimes <= Constants.ENEMT_ATTACKS_NUMBER){
+        if(attackTimes < Constants.ENEMY_ATTACKS_NUMBER){
             if(timeSinceAttack.getSeconds() >= Constants.ENEMY_ATTACK_SPEED){
                 attack(Player.getInstance().getStats());
+                System.out.println("Enemy attack value: " + attackDamage + ", Player Health Value: " + Player.getInstance().getStats().getCurrentHealth());
                 attackTimes++;    
             }
         }

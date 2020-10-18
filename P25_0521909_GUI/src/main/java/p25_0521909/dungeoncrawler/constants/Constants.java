@@ -8,8 +8,6 @@ import p25_0521909.dungeoncrawler.game.SpawnPoint;
  * @author ludmi
  */
 public class Constants {
-
-    
     
     private Constants(){}
 
@@ -22,10 +20,20 @@ public class Constants {
     public static final int FRAME_UPDATE_RATE = 10;
     public static final int GAME_DURATION = 60;
     
+    public static final int NUMBER_OF_ENEMIES = 5;
     public static final long ENEMY_SPAWN_RATE = 3;
     public static final double ENEMY_MOVE_SPEED = 0.1;
     public static final double ENEMY_ATTACK_SPEED = 1;
-    public static final int ENEMT_ATTACKS_NUMBER = 2;
+    public static final int ENEMY_ATTACKS_NUMBER = 2;
+
+    public static final String ENEMY_TABLE_NAME = "ENEMY";
+    public static final String ENEMY_STATS_TABLE_NAME = "ENEMYSTATS";
+    public static final String ENEMY_SPRITE_TABLE_NAME = "ENEMYSPRITES";
+    
+    public static final String ENEMY_NAME_COLUMN = "ENEMY_NAME";
+    public static final String ENEMY_ATTACK_COLUMN = "ATTACK_VALUE";
+    public static final String ENEMY_HEALTH_COLUMN = "HEALTH_VALUE";
+    public static final String ENEMY_SPRITE_COLUMN = "SPRITE_PATH";
     
     public static int SPAWN_ATTEMPTS = 5;
     public static int SPAWN_POINT_COOLDOWN_DURATION = 5;

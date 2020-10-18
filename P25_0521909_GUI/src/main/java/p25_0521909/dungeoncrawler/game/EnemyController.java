@@ -6,6 +6,7 @@ import java.util.*;
 import javax.swing.Timer;
 
 import p25_0521909.dungeoncrawler.constants.*;
+import p25_0521909.dungeoncrawler.database.DatabaseManager;
 import p25_0521909.dungeoncrawler.enemy.*;
 import p25_0521909.dungeoncrawler.events.GameEvent;
 import p25_0521909.dungeoncrawler.graphics.Sprite;
@@ -91,10 +92,34 @@ public class EnemyController implements Initialisable, Loopable, Observer{
     }
 
     private Enemy spawnEnemy(Point spawnPoint, Point targetPoint) {
-        String name = "Enemy 1";
-        Sprite sprite = new Sprite("sprites/enemy1.png");
-        EnemyStats stats = new EnemyStats(1, 3);
-        EnemyGraphics graphics = new EnemyGraphics(sprite, spawnPoint, targetPoint);
+        int enemyIndex = (int)(Math.random() * (Constants.NUMBER_OF_ENEMIES) + 1);
+        DatabaseManager.connectToDatabase();
+        DatabaseManager.setSearchRowName(Integer.toString(enemyIndex));
+        
+        String name = "";
+        Sprite sprite = null;
+        EnemyStats stats = null;
+        EnemyGraphics graphics = null;
+        
+        if(DatabaseManager.checkTableExists(Constants.ENEMY_TABLE_NAME)){
+            DatabaseManager.setSearchTableName(Constants.ENEMY_TABLE_NAME);
+            name = DatabaseManager.getStringValue(Constants.ENEMY_NAME_COLUMN);
+        }
+        
+        if(DatabaseManager.checkTableExists(Constants.ENEMY_SPRITE_TABLE_NAME)){
+            DatabaseManager.setSearchTableName(Constants.ENEMY_SPRITE_TABLE_NAME);
+            sprite = new Sprite(DatabaseManager.getStringValue(Constants.ENEMY_SPRITE_COLUMN));
+            graphics = new EnemyGraphics(sprite, spawnPoint, targetPoint);
+        }
+        
+        if(DatabaseManager.checkTableExists(Constants.ENEMY_STATS_TABLE_NAME)){
+            DatabaseManager.setSearchTableName(Constants.ENEMY_STATS_TABLE_NAME);
+            int attackValue = DatabaseManager.getIntValue(Constants.ENEMY_ATTACK_COLUMN);
+            int healthValue = DatabaseManager.getIntValue(Constants.ENEMY_HEALTH_COLUMN);
+            stats = new EnemyStats(attackValue, healthValue); 
+        }
+        
+        System.out.println(enemyIndex);
         
         return new Enemy(name, stats, graphics);
     }
