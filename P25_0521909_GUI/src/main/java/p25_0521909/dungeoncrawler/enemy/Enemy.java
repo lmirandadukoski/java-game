@@ -1,10 +1,14 @@
 package p25_0521909.dungeoncrawler.enemy;
 
+import java.util.Observer;
+import p25_0521909.dungeoncrawler.constants.EventName;
+import p25_0521909.dungeoncrawler.events.GameEventListener;
+
 /**
  *
  * @author ludmi
  */
-public class Enemy {
+public class Enemy{
     private String name;
     
     private EnemyStats stats;
@@ -14,14 +18,15 @@ public class Enemy {
         this.name = name;
         this.stats = stats;
         this.graphics = graphics;
+        
+        graphics.enemyAttackStart.addObserver(stats);
     }
-    
+
     public EnemyGraphics getGraphics(){
         return graphics;
     }
     
     public EnemyStats getStats(){
         return stats;
-    }
-    
+    }    
 }

@@ -6,7 +6,8 @@ package p25_0521909.dungeoncrawler.constants;
  */
 public enum EventName {
     START_GAME ("START_GAME"),
-    STOP_GAME ("STOP_GAME");
+    STOP_GAME ("STOP_GAME"),
+    ENEMY_ATTACK("ENEMY_ATTACK");
     
     private final String name;
     EventName(String name){

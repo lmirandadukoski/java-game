@@ -24,8 +24,11 @@ public class Constants {
     
     public static final long ENEMY_SPAWN_RATE = 3;
     public static final double ENEMY_MOVE_SPEED = 0.1;
+    public static final double ENEMY_ATTACK_SPEED = 1;
+    public static final int ENEMT_ATTACKS_NUMBER = 2;
+    
     public static int SPAWN_ATTEMPTS = 5;
-    public static int SPAWN_POINT_COOLDOWN_DURATION = 3;
+    public static int SPAWN_POINT_COOLDOWN_DURATION = 5;
     
     public static final SpawnPoint SPAWN_POINT_1 = new SpawnPoint(160, 340);
     public static final SpawnPoint SPAWN_POINT_2 = new SpawnPoint(480, 360);

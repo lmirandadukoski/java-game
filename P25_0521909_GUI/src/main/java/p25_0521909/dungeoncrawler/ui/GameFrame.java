@@ -36,7 +36,7 @@ public class GameFrame extends JFrame implements Initialisable{
     }
     
     void createLayout(){
-        gamePanels = new GamePanel[]{new StartPanel(), new BattlePanel(), new WinPanel()};
+        gamePanels = new GamePanel[]{new StartPanel(), new BattlePanel(), new WinPanel(), new LossPanel()};
         
         screenContent = new JPanel(new CardLayout()){
             @Override

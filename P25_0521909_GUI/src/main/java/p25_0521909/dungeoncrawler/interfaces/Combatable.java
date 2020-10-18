@@ -6,10 +6,11 @@ package p25_0521909.dungeoncrawler.interfaces;
  */
 public interface Combatable {
     
-    public abstract void attack(Combatable combatable);
+    public void attack(Combatable combatable);
     
-    public abstract void takeDamage(int damageAmount);
+    public void takeDamage(int damageAmount);
     
-    public abstract boolean isDead();
+    public boolean isDead();
     
+    public int getCurrentHealth();
 }

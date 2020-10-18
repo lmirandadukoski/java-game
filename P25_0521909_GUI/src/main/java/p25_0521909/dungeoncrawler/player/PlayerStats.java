@@ -13,7 +13,7 @@ public class PlayerStats implements Combatable{
 
     public PlayerStats(){
         attackDamage = 1;
-        defenseModifier = 0.0;
+        defenseModifier = 1.0;
         baseHealthValue = 10;
         currentHealthValue = baseHealthValue;
     }
@@ -39,6 +39,11 @@ public class PlayerStats implements Combatable{
     public boolean isDead(){
         return currentHealthValue <= 0;
     }    
+    
+    @Override
+    public int getCurrentHealth() {
+        return currentHealthValue;
+    }
     
     public void regenHealth(int regenAmount){
         int newHealthValue = currentHealthValue + regenAmount;

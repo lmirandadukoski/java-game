@@ -59,7 +59,7 @@ public class GameManager implements Initialisable, Loopable, GameEventListener{
             timer.stop();
             stopGame.invokeEvent();
             
-            System.out.println("Player lost the game");
+            GameFrame.getInstance().switchGamePanels(PanelName.LOSS);
         }
     }
     
@@ -78,6 +78,13 @@ public class GameManager implements Initialisable, Loopable, GameEventListener{
         throw new CloneNotSupportedException();
     }
 
+    public static synchronized GameManager getInstance(){
+        if(instance == null){
+            instance = new GameManager();
+        }
+        return instance;
+    }
+    
     public void startGame(){
         startTime = Instant.now();
         timer.start();
@@ -88,10 +95,18 @@ public class GameManager implements Initialisable, Loopable, GameEventListener{
         return enemyController;
     } 
     
-    public static synchronized GameManager getInstance(){
-        if(instance == null){
-            instance = new GameManager();
+    public String getTimeLeft(){
+        String timeLeft = "60";
+        
+        try{
+        Duration timeElapsed = Duration.between(startTime, Instant.now());
+        
+        long s = 60 - timeElapsed.getSeconds();
+        
+        timeLeft = Long.toString(s);
         }
-        return instance;
+        catch(NullPointerException e){}
+
+        return timeLeft;
     }
 }

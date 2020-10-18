@@ -5,6 +5,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Observable;
 import java.util.Observer;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import p25_0521909.dungeoncrawler.constants.*;
@@ -21,6 +23,8 @@ import p25_0521909.dungeoncrawler.interfaces.Loopable;
 public class BattlePanel extends GamePanel implements MouseListener, Loopable, Observer{   
     private EnemyController enemyController;
     private Timer timer;
+    
+    JLabel gameTimerDisplay, playerHealthDisplay;
     
     public BattlePanel(){
         super(PanelName.BATTLE);
@@ -39,19 +43,63 @@ public class BattlePanel extends GamePanel implements MouseListener, Loopable, O
     }
      
     void createLayout(){
+        setLayout(new BorderLayout());
+        
+        JPanel HUDPanel = new JPanel();
+        JLabel instructionsText = new JLabel("Left click enemies to attack. Enemies will attack when they reach the middle platform.");
+        instructionsText.setAlignmentX(Component.CENTER_ALIGNMENT);
+        instructionsText.setFont(new Font("Serif", Font.BOLD, 16));
+        instructionsText.setForeground(Color.white);
+        
+        JLabel gameTimerText = new JLabel("Time Left: ");
+        gameTimerText.setAlignmentX(Component.CENTER_ALIGNMENT);
+        gameTimerText.setFont(new Font("Serif", Font.BOLD, 16));
+        gameTimerText.setForeground(Color.white);
+        
+        gameTimerDisplay = new JLabel(GameManager.getInstance().getTimeLeft());
+        gameTimerDisplay.setAlignmentX(Component.CENTER_ALIGNMENT);
+        gameTimerDisplay.setFont(new Font("Serif", Font.BOLD, 16));
+        gameTimerDisplay.setForeground(Color.white);
+        
+        
+        HUDPanel.add(instructionsText);
+        HUDPanel.add(gameTimerText);
+        HUDPanel.add(gameTimerDisplay);
+        HUDPanel.setOpaque(false);
+        
+        JPanel gamePanel = new JPanel();
+        JLabel playerHealthText = new JLabel("Your Health: ");
+        playerHealthText.setAlignmentX(Component.CENTER_ALIGNMENT);
+        playerHealthText.setFont(new Font("Serif", Font.BOLD, 16));
+        playerHealthText.setForeground(Color.white);
+        
+        playerHealthDisplay = new JLabel(Integer.toString(Player.getInstance().getStats().getCurrentHealth()));
+        playerHealthDisplay.setAlignmentX(Component.CENTER_ALIGNMENT);
+        playerHealthDisplay.setFont(new Font("Serif", Font.BOLD, 16));
+        playerHealthDisplay.setForeground(Color.white); 
+        
+        gamePanel.add(playerHealthText);
+        gamePanel.add(playerHealthDisplay);
+        gamePanel.setOpaque(false);
+        
+        //create Player health display
+        //create inventory display
+        
+        this.add(HUDPanel, BorderLayout.NORTH);
+        this.add(gamePanel, BorderLayout.SOUTH);
+    }
+    
+    void updateDisplay(){
+        gameTimerDisplay.setText(GameManager.getInstance().getTimeLeft());
+        playerHealthDisplay.setText(Integer.toString(Player.getInstance().getStats().getCurrentHealth()));
+        
+        
     }
     
     @Override
     public void paintComponent(Graphics g)
     {
         super.paintComponent(g);
-        g.drawRect(Constants.SPAWN_POINT_1.x - (148 / 2), Constants.SPAWN_POINT_1.y - 130, 148, 130);
-        g.drawRect(Constants.SPAWN_POINT_2.x - (148 / 2), Constants.SPAWN_POINT_2.y - 130, 148, 130);
-        g.drawRect(Constants.SPAWN_POINT_3.x - (148 / 2), Constants.SPAWN_POINT_3.y - 130, 148, 130);
-        
-        g.drawRect(Constants.TARGET_POINT_1.x - (148 / 2), Constants.TARGET_POINT_1.y - 130, 148, 130);
-        g.drawRect(Constants.TARGET_POINT_2.x - (148 / 2), Constants.TARGET_POINT_2.y - 130, 148, 130);
-        g.drawRect(Constants.TARGET_POINT_3.x - (148 / 2), Constants.TARGET_POINT_3.y - 130, 148, 130);
 
         for(Enemy enemy : enemyController.enemies){
             Image enemyImage = enemy.getGraphics().getSprite().getSpriteImage();
@@ -90,6 +138,7 @@ public class BattlePanel extends GamePanel implements MouseListener, Loopable, O
 
     @Override
     public void loop() {
+        updateDisplay();
         repaint();
     }
 
