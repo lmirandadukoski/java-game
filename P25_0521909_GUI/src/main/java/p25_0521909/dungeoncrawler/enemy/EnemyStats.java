@@ -63,7 +63,6 @@ public class EnemyStats implements Combatable, Loopable, Observer{
         if(attackTimes < Constants.ENEMY_ATTACKS_NUMBER){
             if(timeSinceAttack.getSeconds() >= Constants.ENEMY_ATTACK_SPEED){
                 attack(Player.getInstance().getStats());
-                System.out.println("Enemy attack value: " + attackDamage + ", Player Health Value: " + Player.getInstance().getStats().getCurrentHealth());
                 attackTimes++;    
             }
         }

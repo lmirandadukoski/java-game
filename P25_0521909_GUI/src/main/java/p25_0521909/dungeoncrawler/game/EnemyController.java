@@ -119,8 +119,6 @@ public class EnemyController implements Initialisable, Loopable, Observer{
             stats = new EnemyStats(attackValue, healthValue); 
         }
         
-        System.out.println(enemyIndex);
-        
         return new Enemy(name, stats, graphics);
     }
 }

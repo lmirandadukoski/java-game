@@ -19,6 +19,7 @@ public class GameFrame extends JFrame implements Initialisable{
     private GamePanel[] gamePanels;
     
     private Sprite background;
+    private PanelName activePanelName;
     
     private GameFrame(){}
     
@@ -55,6 +56,7 @@ public class GameFrame extends JFrame implements Initialisable{
     
         getContentPane().add(screenContent); 
         setVisible(true);
+        activePanelName = PanelName.START;
     }
     
     @Override
@@ -71,6 +73,11 @@ public class GameFrame extends JFrame implements Initialisable{
     
     public void switchGamePanels(PanelName name){
         CardLayout cardLayout = (CardLayout) screenContent.getLayout();        
-        cardLayout.show(screenContent, name.toString());        
-    }    
+        cardLayout.show(screenContent, name.toString());  
+        activePanelName = name;
+    }
+
+    public PanelName getActivePanelName(){
+        return activePanelName;
+    }
 }
