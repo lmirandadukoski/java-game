@@ -5,6 +5,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Observable;
 import java.util.Observer;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -17,6 +18,9 @@ import p25_0521909.dungeoncrawler.interfaces.Displayable;
 import p25_0521909.dungeoncrawler.player.Player;
 import p25_0521909.dungeoncrawler.interfaces.Loopable;
 import p25_0521909.dungeoncrawler.interfaces.UpdatableDisplay;
+import p25_0521909.dungeoncrawler.item.Inventory;
+import p25_0521909.dungeoncrawler.item.Item;
+import p25_0521909.dungeoncrawler.item.ItemProperties;
 
 /**
  *
@@ -78,10 +82,26 @@ public class BattlePanel extends GamePanel implements Displayable, UpdatableDisp
         playerHealthDisplay = new JLabel(Integer.toString(Player.getInstance().getStats().getCurrentHealth()));
         playerHealthDisplay.setAlignmentX(Component.CENTER_ALIGNMENT);
         playerHealthDisplay.setFont(new Font("Serif", Font.BOLD, 16));
-        playerHealthDisplay.setForeground(Color.white); 
+        playerHealthDisplay.setForeground(Color.white);
         
+        Inventory playerInventory = Player.getInstance().getInventory();
+        Item item1 = playerInventory.getItemByName(ItemProperties.HEALTH_POTION_NAME);
+        ItemButton item1Button = new ItemButton(item1, playerInventory.getItemQuantity(item1));
+        item1Button.createDisplay();
+        
+        Item item2 = playerInventory.getItemByName(ItemProperties.DEFENSE_POTION_NAME);
+        CooldownItemButton item2Button = new CooldownItemButton(item2, playerInventory.getItemQuantity(item2));
+        item2Button.createDisplay();
+        
+        Item item3 = playerInventory.getItemByName(ItemProperties.ATTACK_POTION_NAME);
+        CooldownItemButton item3Button = new CooldownItemButton(item3, playerInventory.getItemQuantity(item3));
+        item3Button.createDisplay();
+
         gamePanel.add(playerHealthText);
         gamePanel.add(playerHealthDisplay);
+        gamePanel.add(item1Button);
+        gamePanel.add(item2Button);
+        gamePanel.add(item3Button);
         gamePanel.setOpaque(false);
         
         this.add(HUDPanel, BorderLayout.NORTH);

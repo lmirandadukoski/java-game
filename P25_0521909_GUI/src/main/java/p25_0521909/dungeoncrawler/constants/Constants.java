@@ -51,5 +51,5 @@ public class Constants {
     
     public static final Point TARGET_POINT_1 = new Point(280, 440);
     public static final Point TARGET_POINT_2 = new Point(480, 470);
-    public static final Point TARGET_POINT_3 = new Point(680, 440);   
+    public static final Point TARGET_POINT_3 = new Point(680, 440); 
 }

@@ -9,16 +9,17 @@ import p25_0521909.dungeoncrawler.interfaces.Combatable;
  */
 public class PlayerStats implements Combatable{   
     private double defenseModifier;    
-    private int currentHealthValue;
+    private int currentAttackValue, currentHealthValue;
 
     public PlayerStats(){
-        defenseModifier = Constants.PLAYER_BASE_DEFENSE;        
+        defenseModifier = Constants.PLAYER_BASE_DEFENSE;  
+        currentAttackValue = Constants.PLAYER_ATTACK_VALUE;
         currentHealthValue = Constants.PLAYER_HEALTH_VALUE;
     }
     
     @Override
     public void attack(Combatable combatable){
-        combatable.takeDamage(Constants.PLAYER_ATTACK_VALUE);
+        combatable.takeDamage(currentAttackValue);
     }
     
     @Override
@@ -41,6 +42,18 @@ public class PlayerStats implements Combatable{
     @Override
     public int getCurrentHealth() {
         return currentHealthValue;
+    }
+    
+    public int getAttackValue(){
+        return currentAttackValue;
+    }
+    
+    public void setAttackValue(int value){
+        currentAttackValue = value;
+    }
+    
+    public double getDefenseModifier(){
+        return defenseModifier;
     }
     
     public void setDefenseModifier(double value){

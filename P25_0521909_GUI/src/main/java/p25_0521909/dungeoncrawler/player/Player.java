@@ -1,20 +1,28 @@
 package p25_0521909.dungeoncrawler.player;
 
 import p25_0521909.dungeoncrawler.interfaces.Initialisable;
-import p25_0521909.dungeoncrawler.item.Inventory;
+import p25_0521909.dungeoncrawler.item.*;
 
 /**
  *
  * @author ludmi
  */
-public class Player {
+public class Player implements Initialisable{
     private final PlayerStats STATS;
-    private Inventory inventory;
+    private final Inventory INVENTORY;
     
     private static Player instance;
     
     private Player(){
         STATS = new PlayerStats();
+        INVENTORY = new Inventory(); 
+    }
+    
+    @Override
+    public void initialise() {
+        INVENTORY.addItem(new HealthPotion(), ItemProperties.HEALTH_POTION_QUANTITY);
+        INVENTORY.addItem(new DefensePotion(), ItemProperties.DEFENSE_POTION_QUANTITY);
+        INVENTORY.addItem(new AttackPotion(), ItemProperties.ATTACK_POTION_QUANTITY);
     }
     
     @Override
@@ -34,6 +42,6 @@ public class Player {
     }
     
     public Inventory getInventory(){
-        return inventory;
+        return INVENTORY;
     }
 }

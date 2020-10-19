@@ -17,8 +17,16 @@ public abstract class Item{
      * @param description
      */    
     public Item(String name, String description){
-        this.NAME = name;
-        this.DESCRIPTION = description;
+        NAME = name;
+        DESCRIPTION = description;
+    }
+    
+    public String getName(){
+        return NAME;
+    }
+
+    public String getDescription(){
+        return DESCRIPTION;
     }
     
     public abstract void consume();

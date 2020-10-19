@@ -1,19 +1,19 @@
 package p25_0521909.dungeoncrawler.item;
 
+import p25_0521909.dungeoncrawler.player.Player;
+
 /**
  *
  * @author ludmi
  */
 public class HealthPotion extends Item{
-    private int healthRegenAmount;
     
-    public HealthPotion(String name, String description) {
-        super(name, description);
+    public HealthPotion() {
+        super(ItemProperties.HEALTH_POTION_NAME, ItemProperties.HEALTH_POTION_DESCRIPTION);
     }
 
     @Override
     public void consume() {
-        //Increase player health on consumption
-    }
-    
+        Player.getInstance().getStats().regenHealth(ItemProperties.HEALTH_POTION_REGEN_AMOUNT);
+    } 
 }
