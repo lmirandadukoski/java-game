@@ -20,6 +20,14 @@ public class Constants {
     public static final int FRAME_UPDATE_RATE = 10;
     public static final int GAME_DURATION = 60;
     
+    public static final int PLAYER_ATTACK_EASY = 2;
+    public static final int PLAYER_ATTACK_NORMAL = 1;
+    public static final int PLAYER_ATTACK_HARD = 1;
+    
+    public static final int PLAYER_HEALTH_EASY = 10;
+    public static final int PLAYER_HEALTH_NORMAL = 10;
+    public static final int PLAYER_HEALTH_HARD = 7;
+    
     public static final int NUMBER_OF_ENEMIES = 5;
     public static final long ENEMY_SPAWN_RATE = 3;
     public static final double ENEMY_MOVE_SPEED = 0.1;
@@ -27,8 +35,8 @@ public class Constants {
     public static final int ENEMY_ATTACKS_NUMBER = 2;
 
     public static final String ENEMY_TABLE_NAME = "ENEMY";
-    public static final String ENEMY_STATS_TABLE_NAME = "ENEMYSTATS";
-    public static final String ENEMY_SPRITE_TABLE_NAME = "ENEMYSPRITES";
+    public static final String ENEMY_STATS_TABLE_NAME = "ENEMY_STATS";
+    public static final String ENEMY_SPRITE_TABLE_NAME = "ENEMY_SPRITE";
     
     public static final String ENEMY_NAME_COLUMN = "ENEMY_NAME";
     public static final String ENEMY_ATTACK_COLUMN = "ATTACK_VALUE";

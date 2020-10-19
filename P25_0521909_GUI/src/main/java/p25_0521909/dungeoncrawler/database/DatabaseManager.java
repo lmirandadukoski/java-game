@@ -12,7 +12,7 @@ import java.sql.Statement;
  * @author ludmi
  */
 public class DatabaseManager {
-    private static final String URL = "jdbc:derby:EnemyDB;create=true";
+    private static final String URL = "jdbc:derby:DungeonCrawlerDB;create=true";
     private static final String USERNAME = "p25";
     private static final String PASSWORD = "0521909";
 
