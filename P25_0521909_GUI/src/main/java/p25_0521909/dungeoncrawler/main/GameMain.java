@@ -1,6 +1,7 @@
 package p25_0521909.dungeoncrawler.main;
 
 import java.awt.EventQueue;
+
 import p25_0521909.dungeoncrawler.game.GameManager;
 import p25_0521909.dungeoncrawler.ui.GameFrame;
 
@@ -9,8 +10,8 @@ import p25_0521909.dungeoncrawler.ui.GameFrame;
  * @author ludmi
  */
 public class GameMain {
-    static GameFrame gf;
-    static GameManager gm;
+    private static GameFrame gf;
+    private static GameManager gm;
     
     public static void main(String[] args) {
         EventQueue.invokeLater( ()-> {

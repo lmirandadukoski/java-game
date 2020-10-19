@@ -40,13 +40,13 @@ public class GameFrameTest {
     }
 
     /**
-     * Test of createLayout method, of class GameFrame.
+     * Test of createDisplay method, of class GameFrame.
      */
     @Test
     public void testCreateLayout() {
         System.out.println("createLayout");
         
-        gf.createLayout();
+        gf.createDisplay();
         PanelName expResult = PanelName.START;
         PanelName result = gf.getActivePanelName();
         

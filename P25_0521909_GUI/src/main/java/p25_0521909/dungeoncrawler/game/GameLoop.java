@@ -2,8 +2,8 @@ package p25_0521909.dungeoncrawler.game;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import p25_0521909.dungeoncrawler.interfaces.Loopable;
 
+import p25_0521909.dungeoncrawler.interfaces.Loopable;
 
 /**
  *
@@ -11,14 +11,14 @@ import p25_0521909.dungeoncrawler.interfaces.Loopable;
  */
 public class GameLoop implements ActionListener{
     
-    private Loopable loopable;
+    private final Loopable LOOPABLE;
     
     public GameLoop(Loopable updatable){
-        this.loopable = updatable;
+        this.LOOPABLE = updatable;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        loopable.loop();
+        LOOPABLE.loop();
     } 
 }

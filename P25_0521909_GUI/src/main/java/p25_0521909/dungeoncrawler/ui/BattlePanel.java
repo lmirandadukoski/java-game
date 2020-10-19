@@ -13,14 +13,16 @@ import p25_0521909.dungeoncrawler.constants.*;
 import p25_0521909.dungeoncrawler.enemy.Enemy;
 import p25_0521909.dungeoncrawler.events.GameEvent;
 import p25_0521909.dungeoncrawler.game.*;
+import p25_0521909.dungeoncrawler.interfaces.Displayable;
 import p25_0521909.dungeoncrawler.player.Player;
 import p25_0521909.dungeoncrawler.interfaces.Loopable;
+import p25_0521909.dungeoncrawler.interfaces.UpdatableDisplay;
 
 /**
  *
  * @author ludmi
  */
-public class BattlePanel extends GamePanel implements MouseListener, Loopable, Observer{   
+public class BattlePanel extends GamePanel implements Displayable, UpdatableDisplay, MouseListener, Loopable, Observer{   
     private EnemyController enemyController;
     private Timer timer;
     
@@ -39,10 +41,11 @@ public class BattlePanel extends GamePanel implements MouseListener, Loopable, O
         enemyController = GameManager.getInstance().getEnemyController();
         timer = new Timer(Constants.FRAME_UPDATE_RATE, new GameLoop(this));
         
-        createLayout();
+        createDisplay();
     }
-     
-    void createLayout(){
+    
+    @Override
+    public void createDisplay(){
         setLayout(new BorderLayout());
         
         JPanel HUDPanel = new JPanel();
@@ -60,7 +63,6 @@ public class BattlePanel extends GamePanel implements MouseListener, Loopable, O
         gameTimerDisplay.setAlignmentX(Component.CENTER_ALIGNMENT);
         gameTimerDisplay.setFont(new Font("Serif", Font.BOLD, 16));
         gameTimerDisplay.setForeground(Color.white);
-        
         
         HUDPanel.add(instructionsText);
         HUDPanel.add(gameTimerText);
@@ -82,18 +84,14 @@ public class BattlePanel extends GamePanel implements MouseListener, Loopable, O
         gamePanel.add(playerHealthDisplay);
         gamePanel.setOpaque(false);
         
-        //create Player health display
-        //create inventory display
-        
         this.add(HUDPanel, BorderLayout.NORTH);
         this.add(gamePanel, BorderLayout.SOUTH);
     }
     
-    void updateDisplay(){
+    @Override
+    public void updateDisplay(){
         gameTimerDisplay.setText(GameManager.getInstance().getTimeLeft());
         playerHealthDisplay.setText(Integer.toString(Player.getInstance().getStats().getCurrentHealth()));
-        
-        
     }
     
     @Override
@@ -110,11 +108,24 @@ public class BattlePanel extends GamePanel implements MouseListener, Loopable, O
     }
 
     @Override
-    public void mouseClicked(MouseEvent e) {}
+    public void loop() {
+        updateDisplay();
+        repaint();
+    }
 
     @Override
-    public void mousePressed(MouseEvent e) {}
-
+    public void update(Observable o, Object arg) {
+        GameEvent event = (GameEvent) o;
+        
+        if(event.getEventName().equals(EventName.START_GAME)){
+            timer.start();
+        } 
+        
+        if(event.getEventName().equals(EventName.STOP_GAME)){
+            timer.stop();
+        } 
+    } 
+    
     @Override
     public void mouseReleased(MouseEvent e) {
         Point point = e.getPoint();
@@ -128,30 +139,17 @@ public class BattlePanel extends GamePanel implements MouseListener, Loopable, O
                 Player.getInstance().getStats().attack(enemy.getStats());
             }            
         }   
-    }
+    }   
+    
+    @Override
+    public void mouseClicked(MouseEvent e) {}
 
+    @Override
+    public void mousePressed(MouseEvent e) {}
+    
     @Override
     public void mouseEntered(MouseEvent e) {}
 
     @Override
     public void mouseExited(MouseEvent e) {}
-
-    @Override
-    public void loop() {
-        updateDisplay();
-        repaint();
-    }
-
-    @Override
-    public void update(Observable o, Object arg) {
-        GameEvent event = (GameEvent) o;
-        
-        if(event.equals(EventName.START_GAME)){
-            timer.start();
-        } 
-        
-        if(event.equals(EventName.STOP_GAME)){
-            timer.stop();
-        } 
-    }  
 }

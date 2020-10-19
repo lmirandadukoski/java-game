@@ -1,6 +1,7 @@
 package p25_0521909.dungeoncrawler.events;
 
 import java.util.Observable;
+
 import p25_0521909.dungeoncrawler.constants.EventName;
 
 /**
@@ -8,10 +9,10 @@ import p25_0521909.dungeoncrawler.constants.EventName;
  * @author ludmi
  */
 public class GameEvent extends Observable{
-    private EventName name;
+    private final EventName NAME;
     
     public GameEvent(EventName name){
-        this.name = name;
+        this.NAME = name;
     }
     
     @Override
@@ -24,7 +25,7 @@ public class GameEvent extends Observable{
     }
     
     public EventName getEventName(){
-        return name;
+        return NAME;
     }
     
     public void invokeEvent() {

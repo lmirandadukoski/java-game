@@ -20,25 +20,24 @@ public class Constants {
     public static final int FRAME_UPDATE_RATE = 10;
     public static final int GAME_DURATION = 60;
     
-    public static final int PLAYER_ATTACK_EASY = 2;
-    public static final int PLAYER_ATTACK_NORMAL = 1;
-    public static final int PLAYER_ATTACK_HARD = 1;
-    
-    public static final int PLAYER_HEALTH_EASY = 10;
-    public static final int PLAYER_HEALTH_NORMAL = 10;
-    public static final int PLAYER_HEALTH_HARD = 7;
+    public static final int PLAYER_ATTACK_VALUE = 1;
+    public static final int PLAYER_HEALTH_VALUE = 10;
+    public static final double PLAYER_BASE_DEFENSE = 1.0;
     
     public static final int NUMBER_OF_ENEMIES = 5;
-    public static final long ENEMY_SPAWN_RATE = 3;
-    public static final double ENEMY_MOVE_SPEED = 0.1;
-    public static final double ENEMY_ATTACK_SPEED = 1;
-    public static final int ENEMY_ATTACKS_NUMBER = 2;
 
     public static final String ENEMY_TABLE_NAME = "ENEMY";
+    public static final String ENEMY_SPAWN_TABLE_NAME = "ENEMY_PROPERTIES";
     public static final String ENEMY_STATS_TABLE_NAME = "ENEMY_STATS";
     public static final String ENEMY_SPRITE_TABLE_NAME = "ENEMY_SPRITE";
     
     public static final String ENEMY_NAME_COLUMN = "ENEMY_NAME";
+    
+    public static final String ENEMY_SPAWN_RATE_COLUMN = "SPAWN_RATE";
+    public static final String ENEMY_MOVE_SPEED_COLUMN = "MOVE_SPEED";
+    public static final String ENEMY_ATTACK_SPEED_COLUMN = "ATTACK_SPEED";
+    public static final String ENEMY_ATTACKS_NUMBER_COLUMN = "ATTACKS_NUMBER";
+    
     public static final String ENEMY_ATTACK_COLUMN = "ATTACK_VALUE";
     public static final String ENEMY_HEALTH_COLUMN = "HEALTH_VALUE";
     public static final String ENEMY_SPRITE_COLUMN = "SPRITE_PATH";

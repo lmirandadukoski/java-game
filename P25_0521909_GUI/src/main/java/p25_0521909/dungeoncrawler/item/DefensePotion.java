@@ -14,5 +14,4 @@ public class DefensePotion extends ExpirableItem{
     public void consume() {
         //increase defense modifier for x seconds
     }
-    
 }

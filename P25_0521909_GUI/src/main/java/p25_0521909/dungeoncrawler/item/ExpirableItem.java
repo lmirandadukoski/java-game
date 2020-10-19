@@ -5,10 +5,10 @@ package p25_0521909.dungeoncrawler.item;
  * @author ludmi
  */
 public abstract class ExpirableItem extends Item{
-    int effectDuration;
+    private final long EFFECT_DURATION;
 
-    public ExpirableItem(String name, String description, int effectDuration) {
+    public ExpirableItem(String name, String description, long effectDuration) {
         super(name, description);
-        this.effectDuration = effectDuration;
+        EFFECT_DURATION = effectDuration;
     }
 }

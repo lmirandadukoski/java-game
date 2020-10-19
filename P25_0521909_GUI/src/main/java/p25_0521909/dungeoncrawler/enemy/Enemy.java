@@ -1,32 +1,27 @@
 package p25_0521909.dungeoncrawler.enemy;
 
-import java.util.Observer;
-import p25_0521909.dungeoncrawler.constants.EventName;
-import p25_0521909.dungeoncrawler.events.GameEventListener;
-
 /**
  *
  * @author ludmi
  */
 public class Enemy{
-    private String name;
-    
-    private EnemyStats stats;
-    private EnemyGraphics graphics;
+    private final String NAME;
+    private final EnemyStats STATS;
+    private final EnemyGraphics GRAPHICS;
     
     public Enemy(String name, EnemyStats stats, EnemyGraphics graphics) {
-        this.name = name;
-        this.stats = stats;
-        this.graphics = graphics;
+        this.NAME = name;
+        this.STATS = stats;
+        this.GRAPHICS = graphics;
         
-        graphics.enemyAttackStart.addObserver(stats);
+        graphics.ENEMY_ATTACK_START.addObserver(stats);
     }
 
     public EnemyGraphics getGraphics(){
-        return graphics;
+        return GRAPHICS;
     }
     
     public EnemyStats getStats(){
-        return stats;
+        return STATS;
     }    
 }

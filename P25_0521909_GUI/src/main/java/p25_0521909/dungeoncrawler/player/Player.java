@@ -7,19 +7,14 @@ import p25_0521909.dungeoncrawler.item.Inventory;
  *
  * @author ludmi
  */
-public class Player implements Initialisable{
+public class Player {
+    private final PlayerStats STATS;
     private Inventory inventory;
-    private PlayerStats stats;
     
     private static Player instance;
     
     private Player(){
-        stats = new PlayerStats();
-    }
-    
-    @Override
-    public void initialise(){
-        
+        STATS = new PlayerStats();
     }
     
     @Override
@@ -33,9 +28,9 @@ public class Player implements Initialisable{
         }
         return instance;
     }
-    
+
     public PlayerStats getStats(){
-        return stats;
+        return STATS;
     }
     
     public Inventory getInventory(){

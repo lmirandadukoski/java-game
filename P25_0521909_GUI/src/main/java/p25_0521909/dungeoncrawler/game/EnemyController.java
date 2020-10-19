@@ -18,19 +18,18 @@ import p25_0521909.dungeoncrawler.interfaces.Loopable;
  * @author ludmi
  */
 public class EnemyController implements Initialisable, Loopable, Observer{
+    private final SpawnPoint[] SPAWN_POINTS;
+    private final Point[] TARGET_POINTS;
+    
+    private long spawnRate;
+    private Timer timer;
+    private Instant lastSpawnTime;
+    
     public ArrayList<Enemy> enemies;
 
-    private SpawnPoint[] spawnPoints;
-    private Point[] targetPoints;
-    private Timer timer;
-    
-    private Instant lastSpawnTime;
-
     public EnemyController(){
-        spawnPoints = new SpawnPoint[]{Constants.SPAWN_POINT_1, Constants.SPAWN_POINT_2, Constants.SPAWN_POINT_3}; 
-        targetPoints = new Point[]{Constants.TARGET_POINT_1, Constants.TARGET_POINT_2, Constants.TARGET_POINT_3};
-        
-        initialise();
+        SPAWN_POINTS = new SpawnPoint[]{Constants.SPAWN_POINT_1, Constants.SPAWN_POINT_2, Constants.SPAWN_POINT_3}; 
+        TARGET_POINTS = new Point[]{Constants.TARGET_POINT_1, Constants.TARGET_POINT_2, Constants.TARGET_POINT_3};        
     }
     
     @Override
@@ -44,17 +43,18 @@ public class EnemyController implements Initialisable, Loopable, Observer{
 
     @Override
     public void loop() {
+        
         Duration timeSinceSpawn = Duration.between(lastSpawnTime, Instant.now());
         
-        if(timeSinceSpawn.getSeconds() >= Constants.ENEMY_SPAWN_RATE){
+        if(timeSinceSpawn.getSeconds() >= spawnRate){
             int spawnAttempts = 0;
             while(spawnAttempts < Constants.SPAWN_ATTEMPTS){
-                int index = (int) (Math.random() * spawnPoints.length);
+                int index = (int) (Math.random() * SPAWN_POINTS.length);
                 
-                if(spawnPoints[index].isAvailable()){
-                    Enemy enemy = spawnEnemy(spawnPoints[index].getLocation(), targetPoints[index]);
+                if(SPAWN_POINTS[index].isAvailable()){
+                    Enemy enemy = spawnEnemy(SPAWN_POINTS[index].getLocation(), TARGET_POINTS[index]);
                     enemies.add(enemy);
-                    spawnPoints[index].onCooldown();
+                    SPAWN_POINTS[index].onCooldown();
                     lastSpawnTime = Instant.now();                    
                     break;
                 }
@@ -120,5 +120,23 @@ public class EnemyController implements Initialisable, Loopable, Observer{
         }
         
         return new Enemy(name, stats, graphics);
+    }
+
+    public void fetchVariablesFromDatabase() {
+        int difficultyIndex = Difficulty.getDifficultyIndex();
+        
+        DatabaseManager.connectToDatabase();
+        DatabaseManager.setSearchRowName(Integer.toString(difficultyIndex));
+        
+        if(DatabaseManager.checkTableExists(Constants.ENEMY_SPAWN_TABLE_NAME)){
+            DatabaseManager.setSearchTableName(Constants.ENEMY_SPAWN_TABLE_NAME);
+            spawnRate = (long) DatabaseManager.getIntValue(Constants.ENEMY_SPAWN_RATE_COLUMN);
+            
+            double moveSpeed = DatabaseManager.getDoubleValue(Constants.ENEMY_MOVE_SPEED_COLUMN);
+            double attackSpeed = DatabaseManager.getDoubleValue(Constants.ENEMY_ATTACK_SPEED_COLUMN);
+            int attacksNumber = DatabaseManager.getIntValue(Constants.ENEMY_ATTACKS_NUMBER_COLUMN);
+            
+            EnemyProperties.setEnemyProperties(moveSpeed, attackSpeed, attacksNumber);
+        }        
     }
 }

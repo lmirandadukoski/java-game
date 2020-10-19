@@ -6,13 +6,14 @@ import javax.swing.*;
 import p25_0521909.dungeoncrawler.constants.Constants;
 import p25_0521909.dungeoncrawler.constants.PanelName;
 import p25_0521909.dungeoncrawler.graphics.Sprite;
+import p25_0521909.dungeoncrawler.interfaces.Displayable;
 import p25_0521909.dungeoncrawler.interfaces.Initialisable;
 
 /**
  *
  * @author ludmi
  */
-public class GameFrame extends JFrame implements Initialisable{
+public class GameFrame extends JFrame implements Initialisable, Displayable{
     private static GameFrame instance;
     
     private Container screenContent;
@@ -33,10 +34,11 @@ public class GameFrame extends JFrame implements Initialisable{
         
         background = new Sprite(Constants.BACKGROUND_IMAGE_PATH);
         
-        createLayout();        
+        createDisplay();        
     }
     
-    void createLayout(){
+    @Override
+    public void createDisplay(){
         gamePanels = new GamePanel[]{new StartPanel(), new BattlePanel(), new WinPanel(), new LossPanel()};
         
         screenContent = new JPanel(new CardLayout()){

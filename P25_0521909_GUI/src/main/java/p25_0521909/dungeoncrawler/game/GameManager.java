@@ -3,6 +3,7 @@ package p25_0521909.dungeoncrawler.game;
 import java.time.*;
 import java.util.*;
 import javax.swing.Timer;
+
 import p25_0521909.dungeoncrawler.constants.Constants;
 import p25_0521909.dungeoncrawler.constants.EventName;
 import p25_0521909.dungeoncrawler.constants.PanelName;
@@ -38,7 +39,7 @@ public class GameManager implements Initialisable, Loopable, GameEventListener{
         gameEvents.add(stopGame);
         
         playerStats = Player.getInstance().getStats();
-        enemyController = new EnemyController();        
+        enemyController = new EnemyController();
         timer = new Timer(Constants.FRAME_UPDATE_RATE, new GameLoop(this));  
     }
     
@@ -54,11 +55,12 @@ public class GameManager implements Initialisable, Loopable, GameEventListener{
             GameFrame.getInstance().switchGamePanels(PanelName.WIN);
         }
         
+
         if(playerStats.isDead()){
             endTime = Instant.now();
             timer.stop();
             stopGame.invokeEvent();
-            
+
             GameFrame.getInstance().switchGamePanels(PanelName.LOSS);
         }
     }
@@ -86,6 +88,9 @@ public class GameManager implements Initialisable, Loopable, GameEventListener{
     }
     
     public void startGame(){
+        enemyController.fetchVariablesFromDatabase();
+        enemyController.initialise();
+        
         startTime = Instant.now();
         timer.start();
         startGame.invokeEvent();
@@ -96,17 +101,22 @@ public class GameManager implements Initialisable, Loopable, GameEventListener{
     } 
     
     public String getTimeLeft(){
-        String timeLeft = "60";
+        String timeLeft;
         
         try{
-        Duration timeElapsed = Duration.between(startTime, Instant.now());
-        
-        long s = 60 - timeElapsed.getSeconds();
-        
-        timeLeft = Long.toString(s);
+            Duration timeElapsed = Duration.between(startTime, Instant.now());
+            timeLeft = Long.toString(60 - timeElapsed.getSeconds());
         }
-        catch(NullPointerException e){}
+        catch(NullPointerException e){
+            timeLeft = "60";
+        }
 
         return timeLeft;
+    }
+    
+    public String getTimeElapsed(){
+        Duration timeElapsed = Duration.between(startTime, endTime);
+        
+        return Long.toString(timeElapsed.getSeconds());
     }
 }

@@ -3,6 +3,7 @@ package p25_0521909.dungeoncrawler.enemy;
 import java.time.*;
 import java.util.*;
 import javax.swing.Timer;
+
 import p25_0521909.dungeoncrawler.constants.Constants;
 import p25_0521909.dungeoncrawler.constants.EventName;
 import p25_0521909.dungeoncrawler.events.GameEvent;
@@ -16,22 +17,23 @@ import p25_0521909.dungeoncrawler.player.Player;
  * @author ludmi
  */
 public class EnemyStats implements Combatable, Loopable, Observer{
-    private final int attackDamage;
+    private final int ATTACK_DAMAGE;
+    private final Timer ATTACK_TIMER;
+    
     private int healthValue, attackTimes;
-    private Timer timer;
     private Instant lastAttackTime;
     
     public EnemyStats(int attackDamage, int healthValue){
-        this.attackDamage = attackDamage;
+        this.ATTACK_DAMAGE = attackDamage;
         this.healthValue = healthValue;
         
-        timer = new Timer(Constants.FRAME_UPDATE_RATE, new GameLoop(this));
+        ATTACK_TIMER = new Timer(Constants.FRAME_UPDATE_RATE, new GameLoop(this));
         attackTimes = 0;
     }
     
     @Override
     public void attack(Combatable combatable) {
-        combatable.takeDamage(attackDamage);
+        combatable.takeDamage(ATTACK_DAMAGE);
     }
 
     @Override
@@ -60,8 +62,8 @@ public class EnemyStats implements Combatable, Loopable, Observer{
     public void loop() {
         Duration timeSinceAttack = Duration.between(lastAttackTime, Instant.now());
         
-        if(attackTimes < Constants.ENEMY_ATTACKS_NUMBER){
-            if(timeSinceAttack.getSeconds() >= Constants.ENEMY_ATTACK_SPEED){
+        if(attackTimes < EnemyProperties.ENEMY_ATTACKS_NUMBER){
+            if(timeSinceAttack.getSeconds() >= EnemyProperties.ENEMY_ATTACK_SPEED){
                 attack(Player.getInstance().getStats());
                 attackTimes++;    
             }
@@ -69,7 +71,7 @@ public class EnemyStats implements Combatable, Loopable, Observer{
         
         else{
             healthValue = 0;
-            timer.stop();
+            ATTACK_TIMER.stop();
         }        
     }
 
@@ -78,7 +80,7 @@ public class EnemyStats implements Combatable, Loopable, Observer{
         GameEvent event = (GameEvent) o;
         
         if(event.equals(EventName.ENEMY_ATTACK)){
-            timer.start();
+            ATTACK_TIMER.start();
             lastAttackTime = Instant.now();
         }         
     }

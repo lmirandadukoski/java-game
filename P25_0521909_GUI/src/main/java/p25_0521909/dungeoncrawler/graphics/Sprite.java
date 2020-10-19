@@ -9,19 +9,19 @@ import javax.swing.ImageIcon;
  * @author ludmi
  */
 public class Sprite {
-    private ImageIcon sprite;
-    private Dimension spriteDimension;
+    private final ImageIcon SPRITE;
+    private final Dimension SPRITE_DIMENSION;
     
     public Sprite(String spritePath){
-        sprite = new ImageIcon(spritePath);
-        spriteDimension = new Dimension(sprite.getIconWidth(), sprite.getIconHeight());
+        SPRITE = new ImageIcon(spritePath);
+        SPRITE_DIMENSION = new Dimension(SPRITE.getIconWidth(), SPRITE.getIconHeight());
     }
     
     public Image getSpriteImage(){
-        return sprite.getImage();
+        return SPRITE.getImage();
     } 
     
     public Dimension getSpriteDimension(){
-        return spriteDimension;
+        return SPRITE_DIMENSION;
     }
 }
